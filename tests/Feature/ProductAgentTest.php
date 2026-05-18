@@ -3,7 +3,7 @@
 namespace Tests\Feature;
 
 use App\Ai\Agents\ProductAgent;
-use App\Ai\Tools\SearchProducts;
+use App\Ai\Tools\SearchEscrowHelp;
 use App\Models\Product;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Laravel\Ai\Ai;
@@ -14,15 +14,15 @@ class ProductAgentTest extends TestCase
     use RefreshDatabase;
 
     /**
-     * Test that the agent has the SearchProducts tool registered correctly.
+     * Test that the agent has the SearchEscrowHelp tool registered correctly.
      */
-    public function test_agent_has_search_products_tool_registered(): void
+    public function test_agent_has_search_escrow_help_tool_registered(): void
     {
         $agent = new ProductAgent;
         $tools = collect($agent->tools());
 
         $this->assertCount(1, $tools);
-        $this->assertInstanceOf(SearchProducts::class, $tools->first());
+        $this->assertInstanceOf(SearchEscrowHelp::class, $tools->first());
     }
 
     /**
