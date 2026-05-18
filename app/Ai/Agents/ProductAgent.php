@@ -3,6 +3,7 @@
 namespace App\Ai\Agents;
 
 use App\Ai\Tools\SearchProducts;
+use Laravel\Ai\Concerns\RemembersConversations;
 use Laravel\Ai\Contracts\Agent;
 use Laravel\Ai\Contracts\Conversational;
 use Laravel\Ai\Contracts\HasTools;
@@ -10,7 +11,6 @@ use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
 use Stringable;
-use Laravel\Ai\Concerns\RemembersConversations;
 
 class ProductAgent implements Agent, Conversational, HasTools
 {
@@ -21,7 +21,7 @@ class ProductAgent implements Agent, Conversational, HasTools
      */
     public function instructions(): Stringable|string
     {
-        return <<<TEXT
+        return <<<'TEXT'
             You are an AI-powered product assistant for a Laravel e-commerce platform.
             
             Your responsibility is to help users with product discovery, pricing, stock availability,
@@ -59,7 +59,7 @@ class ProductAgent implements Agent, Conversational, HasTools
     public function tools(): iterable
     {
         return [
-            SearchProducts::class
+            new SearchProducts,
         ];
     }
 }
