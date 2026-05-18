@@ -7,16 +7,20 @@ use App\Models\User;
 use App\Ai\Agents\ProductAgent;
 use Laravel\Ai\Responses\StreamableAgentResponse;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class ChatController extends Controller
 {
     public function index()
     {
+        Log::info('The index page is loaded');
         return view('chat');
     }
 
     public function stream(Request $request)
     {
+        Log::info('The request ');
+        Log::info($request->all());
         $request->validate([
             'message' => 'required|string|max:4000',
         ]);
