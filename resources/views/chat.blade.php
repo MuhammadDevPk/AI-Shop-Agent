@@ -294,7 +294,7 @@
 
             activeEventSource.onerror = (err) => {
                 if (currentStreamBubble && (!currentStreamBubble.dataset.raw || currentStreamBubble.dataset.raw.length === 0)) {
-                    currentStreamBubble.innerHTML = '⚠️ Connection error. Please try again.';
+                    currentStreamBubble.innerHTML = '⚠️ Connection error (the AI provider may be overloaded or rate-limited). Please wait a few seconds and try again!';
                     currentStreamBubble.dataset.raw = 'Connection error.';
                 }
                 finishStreaming();
