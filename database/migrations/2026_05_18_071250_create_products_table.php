@@ -16,6 +16,7 @@ return new class extends Migration {
             $table->string('category');
             $table->decimal('price', 8, 2);
             $table->unSignedInteger('stock')->default(0);
+            $table->text('description')->nullable();
             $table->timestamps();
         });
     }
