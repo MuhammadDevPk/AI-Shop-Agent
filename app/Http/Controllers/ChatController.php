@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use App\Ai\Agents\ProductAgent;
-use Laravel\Ai\Responses\StreamableAgentResponse;
+use Laravel\Ai\Responses\StreamedAgentResponse;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
@@ -36,7 +36,7 @@ class ChatController extends Controller
                 ->forUser($user)
                 ->stream($request->message);
 
-        return $stream->then(function (StreamableAgentResponse $response) {
+        return $stream->then(function (StreamedAgentResponse $response) {
             if ($response->conversationId) {
                 session([
                     'product_agent_conversation_id' => $response->conversationId,
