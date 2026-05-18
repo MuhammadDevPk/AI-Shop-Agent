@@ -2,11 +2,11 @@
 
 namespace App\Ai\Tools;
 
+use App\Models\Product;
 use Illuminate\Contracts\JsonSchema\JsonSchema;
 use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Tools\Request;
 use Stringable;
-use App\Models\Product;
 
 class SearchProducts implements Tool
 {
@@ -43,16 +43,12 @@ class SearchProducts implements Tool
             ->get();
 
         if ($products->isEmpty()) {
-            return "No products found matching your query.";
+            return 'No products found matching your query.';
         }
 
         return $products
             ->map(
-                fn($product) =>
-                "Name: {$product->name}"
-                . "Category: {$product->category}"
-                . "Price: {$product->price}"
-                . "Stock: {$product->stock}"
+                fn ($product) => "Name: {$product->name} | Category: {$product->category} | Price: {$product->price} | Stock: {$product->stock}"
             )
             ->implode("\n");
     }
