@@ -14,6 +14,7 @@ class ChatController extends Controller
     public function index()
     {
         Log::info('The index page is loaded');
+
         return view('chat');
     }
 
@@ -48,7 +49,11 @@ class ChatController extends Controller
     protected function resolveUser()
     {
         if (!auth()->check()) {
-            $user = User::first();
+            $user = User::first() ?? User::create([
+                'name' => 'Test User',
+                'email' => 'test@example.com',
+                'password' => bcrypt('password'),
+            ]);
             auth()->login($user);
         }
 
