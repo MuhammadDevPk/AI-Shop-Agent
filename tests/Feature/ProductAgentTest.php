@@ -48,4 +48,23 @@ class ProductAgentTest extends TestCase
         $this->assertNotNull($response);
         $this->assertEquals('Yes, we do have laptops available!', $response->text);
     }
+
+    /**
+     * Test the chat stream controller route.
+     */
+    public function test_chat_stream_route_execution(): void
+    {
+        Ai::fakeAgent(ProductAgent::class, [
+            'Hello! I can help you with products.',
+        ]);
+
+        $response = $this->get('/chat/stream?message=hello');
+
+        $response->assertStatus(200);
+        $response->assertHeader('Content-Type', 'text/event-stream; charset=UTF-8');
+
+        $this->assertDatabaseHas('users', [
+            'email' => 'test@example.com',
+        ]);
+    }
 }
