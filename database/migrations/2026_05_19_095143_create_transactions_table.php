@@ -12,11 +12,36 @@ return new class extends Migration {
     {
         Schema::create('transactions', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('buyer_id')->constrained('users')->cascadeOnDelete();
-            $table->foreignId('seller_id')->constrained('users')->cascadeOnDelete();
+
+            // Add a creator_id to track who initiated the request (since your User model expects it)
+            $table->foreignId('creator_id')->constrained('users')->cascadeOnDelete();
+
+            // These should be nullable because one party is invited later
+            $table->foreignId('buyer_id')->nullable()->constrained('users')->nullOnDelete();
+            $table->foreignId('seller_id')->nullable()->constrained('users')->nullOnDelete();
+
+            // Missing item details from your RAG workflow
+            $table->string('title');
+            $table->text('description')->nullable();
+
+            // Financials and timeframe
             $table->decimal('amount', 10, 2);
-            $table->unsignedInteger('deadline');
-            $table->enum('status', ['pending', 'accepted', 'approved', 'disputed', 'released', 'canceled'])->default('pending');
+            $table->unsignedInteger('deadline')->nullable(); // Depending on if it's days or a timestamp
+
+            // Expand your enum to match the exact statuses from your RAG instructions
+            $table->enum('status', [
+                'pending',
+                'accepted',
+                'admin_pending_approval',
+                'approved',
+                'shipped',
+                'delivered',
+                'hold',
+                'completed',
+                'dispute',
+                'canceled'
+            ])->default('pending');
+
             $table->timestamps();
         });
     }
