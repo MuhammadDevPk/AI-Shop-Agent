@@ -9,6 +9,7 @@ use Laravel\Ai\Contracts\Tool;
 use Laravel\Ai\Messages\Message;
 use Laravel\Ai\Promptable;
 use Stringable;
+use App\Ai\Tools\CreateMilestoneTool;
 
 class EscrowCopilot implements Agent, Conversational, HasTools
 {
@@ -50,7 +51,7 @@ class EscrowCopilot implements Agent, Conversational, HasTools
     {
         return [
             new CreateMilestoneTool(),
-            new VerifyOtpTool()
+            // new VerifyOtpTool()
         ];
     }
 }

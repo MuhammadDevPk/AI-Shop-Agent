@@ -10,10 +10,10 @@ class EscrowChatController extends Controller
 {
     public function handleMessage(Request $request)
     {
-        $user = Auth::user();
+        // $user = Auth::user();
 
         $userState = [
-            'name' => $user->name,
+            'name' => 'Malik Muhammad Awan',
             'role' => 'buyer & seller',
             'current_step' => 'Create Selling Request',
             'last_error' => 'none',
